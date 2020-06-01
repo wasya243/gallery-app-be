@@ -1,7 +1,6 @@
 import crypto from 'crypto';
 
-// TODO: move into env variable
-const GALLERY_APP_SALT = '9ZzcETl2Tr0UljvfQmo7EPI0YNxW8mj7';
+const { GALLERY_APP_SALT } = process.env;
 
 export function encryptPassword(password: string): Promise<string> {
   return new Promise((resolve, reject) => {

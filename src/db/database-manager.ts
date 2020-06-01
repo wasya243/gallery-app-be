@@ -2,12 +2,7 @@ import { createConnection, Connection } from 'typeorm';
 
 import { User } from './models';
 
-// TODO: move into env variables
-const USER = '';
-const HOST = '';
-const DATABASE = '';
-const PASSWORD = '';
-const DB_PORT = 1;
+const { DB_USER, DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT } = process.env;
 
 export class DatabaseManager {
   private static connection: Connection;
@@ -26,15 +21,15 @@ export class DatabaseManager {
     return DatabaseManager.connection;
   }
 
-  public static connect(): Promise<Connection> {
+  public static connect(): Promise<Connection> | undefined {
     if (!DatabaseManager.connection) {
       return createConnection({
         type: 'postgres',
-        host: HOST,
-        port: DB_PORT,
-        username: USER,
-        password: PASSWORD,
-        database: DATABASE,
+        host: DB_HOST,
+        port: parseInt(DB_PORT, 10),
+        username: DB_USER,
+        password: DB_PASSWORD,
+        database: DB_NAME,
         entities: [User],
         synchronize: true,
         logging: false
