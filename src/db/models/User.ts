@@ -1,8 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index, TableInheritance } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 
+// user table is reserved, so I had to rename it
 @Entity()
-@TableInheritance({ column: { type: 'varchar', name: 'type' } })
-export class User {
+export class GalleryUser {
   @PrimaryGeneratedColumn()
   id: number;
 
