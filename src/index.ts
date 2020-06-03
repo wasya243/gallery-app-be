@@ -9,6 +9,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 import { DatabaseManager } from './db/database-manager';
 import { appRoutes } from './routes';
+import { errorHandlerMiddleware } from './utils/middlewares/error-handler';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api', appRoutes);
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => next({ status: 404 }));
+app.use(errorHandlerMiddleware);
 
 const { SERVER_PORT } = process.env;
 

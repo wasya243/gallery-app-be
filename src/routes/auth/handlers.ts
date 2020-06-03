@@ -1,4 +1,5 @@
 import express from 'express';
+import httpErrors from 'http-errors';
 
 import { DatabaseManager } from '../../db/database-manager';
 import { GalleryUser } from '../../db/models';
@@ -13,8 +14,11 @@ export async function signIn(req: express.Request, res: express.Response, next: 
     const galleryUserRepository = connection.getRepository(GalleryUser);
 
     const galleryUser = await galleryUserRepository.findOne({ email });
+
     if (!galleryUser || !(await verifyPassword(password, galleryUser.password))) {
+      // TODO: add logging in the future
       console.error(`user not found or invalid password`);
+      return next(httpErrors(401, 'gallery user not found or invalid password'));
     }
 
     const galleryUserPayload = { id: galleryUser.id };
@@ -30,8 +34,9 @@ export async function signIn(req: express.Request, res: express.Response, next: 
 
     res.send(response);
   } catch (error) {
-    // TODO: add error handler
+    // TODO: add logging in the future
     console.error(error);
+    next(error);
   }
 }
 
@@ -45,7 +50,9 @@ export async function signUp(req: express.Request, res: express.Response, next: 
     const user = await galleryUserRepository.findOne({ email });
 
     if (user) {
-      console.error(`user already exists`);
+      // TODO: add logging in the future
+      console.error(`user with email ${email} already exists`);
+      return next(httpErrors(400, `user with email ${email} already exists`));
     }
 
     const galleryUserToCreate = new GalleryUser();
@@ -64,7 +71,8 @@ export async function signUp(req: express.Request, res: express.Response, next: 
 
     res.send(response);
   } catch (error) {
-    // TODO: add error handler
+    // TODO: add logging in the future
     console.error(error);
+    next(error);
   }
 }
