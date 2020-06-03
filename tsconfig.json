@@ -9,6 +9,12 @@
     "sourceMap": true,
     "outDir": "dist"
   },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/test/**/*.spec.ts"
+  ],
   "lib": [
     "es2015"
   ]
