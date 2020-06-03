@@ -9,3 +9,5 @@ router.post('/auth/sign-up', signUp);
 
 // TODO: add joi validation schema
 router.post('/auth/sign-in', signIn);
+
+// TODO: implement log out functionality in the future
