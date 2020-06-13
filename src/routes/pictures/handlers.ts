@@ -20,14 +20,27 @@ export async function getGalleryUserPictures(req: express.Request, res: express.
   }
 }
 
-// export async function createPicture(req: express.Request, res: express.Response, next: express.NextFunction) {
-//   try {
-//
-//   } catch (err) {
-//
-//   }
-// }
-//
+export async function createPicture(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const { description, title } = req.body;
+  // TODO: try extending request type
+  // @ts-ignore
+  const galleryUserId = req.userData.id;
+  try {
+    const connection = DatabaseManager.getConnection();
+    const pictureRepository = connection.getRepository(Picture);
+
+    const pictureToCreate = new Picture();
+    pictureToCreate.galleryUser = galleryUserId;
+    pictureToCreate.description = description;
+    pictureToCreate.title = title;
+
+    await pictureRepository.save(pictureToCreate);
+
+    res.send(pictureToCreate);
+  } catch (err) {
+    next(err);
+  }
+}
 
 export async function deletePicture(req: express.Request, res: express.Response, next: express.NextFunction) {
   // TODO: try extending request type
