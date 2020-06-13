@@ -1,6 +1,7 @@
 import { createConnection, Connection } from 'typeorm';
 
 import { GalleryUser } from './models';
+import { Picture } from './models/Picture';
 
 const { DB_USER, DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT } = process.env;
 
@@ -30,7 +31,7 @@ export class DatabaseManager {
         username: DB_USER,
         password: DB_PASSWORD,
         database: DB_NAME,
-        entities: [GalleryUser],
+        entities: [GalleryUser, Picture],
         synchronize: true,
         logging: false
       });
