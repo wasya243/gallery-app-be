@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index, OneToMany } from 'typeorm';
+
+import { Picture } from './Picture';
 
 // user table is reserved, so I had to rename it
 @Entity()
@@ -18,4 +20,7 @@ export class GalleryUser {
 
   @Column()
   password: string;
+
+  @OneToMany(type => Picture, picture => picture.galleryUser)
+  pictures: Picture[];
 }

@@ -6,6 +6,8 @@
   ],
   "jsRules": {},
   "rules": {
+    "ter-arrow-parens": [false, "always"],
+    "arrow-parens": [false, "ban-single-arg-parens"],
     "no-console": false,
     "quotemark": [
       true,

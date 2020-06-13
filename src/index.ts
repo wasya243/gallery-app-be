@@ -31,7 +31,7 @@ if (connectionPromise) {
 
       console.log(`Connection with database is established`);
 
-      app.listen(SERVER_PORT, (err) => {
+      app.listen(SERVER_PORT, err => {
         if (err) {
           console.error(err);
           process.exit(1);
